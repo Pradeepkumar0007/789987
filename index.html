@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Job Number Form</title>
+<title>Job Number Form - Fixed Field</title>
 <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -43,6 +43,11 @@
     border-color: #0077ff;
     outline: none;
   }
+  input[readonly] {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+  }
   button {
     margin-top: 1rem;
     width: 100%;
@@ -72,28 +77,51 @@
   </div>
 
   <script>
-    // Function to get URL parameter by name
+    // Function to manually get URL parameter 'job' for file:// URLs
     function getParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
+      if (window.location.search && window.location.search.length > 1) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      } else {
+        const href = window.location.href;
+        const queryIndex = href.indexOf('?');
+        if (queryIndex === -1) return null;
+        const queryString = href.substring(queryIndex + 1);
+        const params = queryString.split('&');
+        for (const param of params) {
+          const [key, value] = param.split('=');
+          if (key === name) return decodeURIComponent(value || '');
+        }
+        return null;
+      }
     }
 
-    // On page load, check for 'job' param and set input value if present
     window.addEventListener('DOMContentLoaded', () => {
       const jobParam = getParam('job');
+      const jobInput = document.getElementById('jobNumber');
       if (jobParam) {
-        const jobInput = document.getElementById('jobNumber');
         jobInput.value = jobParam;
+        jobInput.setAttribute('readonly', true);
+      } else {
+        // If no job param, keep input editable as normal
+        jobInput.removeAttribute('readonly');
       }
 
-      // Optional: handle form submission
       document.getElementById('jobForm').addEventListener('submit', function(e) {
         e.preventDefault();
         alert('Job number submitted: ' + this.jobNumber.value);
       });
     });
   </script>
+
+  <!--
+    Note:
+    Due to browser security restrictions, query parameters may not be reliably accessible
+    when opening local files (file:// protocol).
+    For consistent results, serve this file via a local web server, e.g. run:
+    python -m http.server
+    and access via http://localhost:8000/qrcodes_as_ujrl_fixed.html?job=12546
+  -->
 </body>
 </html>
 
-.
