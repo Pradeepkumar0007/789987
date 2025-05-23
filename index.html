@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Job Number Form</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(50,50,93,.1), 0 10px 10px rgba(0,0,0,.07);
+    width: 320px;
+  }
+  h1 {
+    text-align: center;
+    color: #0077ff;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  input[type="text"]:focus {
+    border-color: #0077ff;
+    outline: none;
+  }
+  button {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 0.7rem;
+    background: #0077ff;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background: #005fcc;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Enter Job Number</h1>
+    <form id="jobForm">
+      <label for="jobNumber">Job Number:</label>
+      <input type="text" id="jobNumber" name="jobNumber" placeholder="Enter job number" />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    // Function to get URL parameter by name
+    function getParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // On page load, check for 'job' param and set input value if present
+    window.addEventListener('DOMContentLoaded', () => {
+      const jobParam = getParam('job');
+      if (jobParam) {
+        const jobInput = document.getElementById('jobNumber');
+        jobInput.value = jobParam;
+      }
+
+      // Optional: handle form submission
+      document.getElementById('jobForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Job number submitted: ' + this.jobNumber.value);
+      });
+    });
+  </script>
+</body>
+</html>
+
+.
