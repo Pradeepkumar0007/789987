@@ -1,127 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Job Number Form - Fixed Field</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f4f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  .container {
-    background: white;
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(50,50,93,.1), 0 10px 10px rgba(0,0,0,.07);
-    width: 320px;
-  }
-  h1 {
-    text-align: center;
-    color: #0077ff;
-  }
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: #333;
-  }
-  input[type="text"] {
-    width: 100%;
-    padding: 0.6rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-  input[type="text"]:focus {
-    border-color: #0077ff;
-    outline: none;
-  }
-  input[readonly] {
-    background-color: #e9ecef;
-    color: #6c757d;
-    cursor: not-allowed;
-  }
-  button {
-    margin-top: 1rem;
-    width: 100%;
-    padding: 0.7rem;
-    background: #0077ff;
-    border: none;
-    color: white;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background: #005fcc;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <title>MEI POWER PVT. LTD. - Department Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2f7;
+      padding: 30px;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    }
+    h1 {
+      text-align: center;
+      color: #0077cc;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 1rem;
+    }
+    input[type="text"], select, input[type="date"], textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    select[multiple], .checkbox-group {
+      height: auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .checkbox-group label {
+      display: block;
+      margin-bottom: 4px;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    .section {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #f8f8f8;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Enter Job Number</h1>
+  <div class="form-container">
+    <h1>MEI POWER PVT. LTD.</h1>
     <form id="jobForm">
       <label for="jobNumber">Job Number:</label>
-      <input type="text" id="jobNumber" name="jobNumber" placeholder="Enter job number" />
+      <input type="text" id="jobNumber" name="jobNumber" />
+
+      <label for="department">Department:</label>
+      <select id="department" name="department" onchange="toggleSections()" required>
+        <option value="">-- Select Department --</option>
+        <option>CORE ASSEMBLY</option>
+        <option>COIL ASSEMBLY</option>
+        <option>HV CONNECTION</option>
+        <option>LV CONNECTION</option>
+        <option>FABRICATION LID</option>
+        <option>OVEN OUT</option>
+        <option>OVEN IN</option>
+        <option>MEGGER</option>
+        <option>WINDING</option>
+        <option>TANK UP</option>
+        <option>PAINT SHOP</option>
+        <option>RATIO</option>
+        <option>TANK FABRICATION</option>
+        <option>TOP YORK</option>
+        <option>TESTING</option>
+      </select>
+
+      <!-- Core Assembly Section -->
+      <div id="coreAssemblySection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="coreStartDate" />
+
+        <label>End Date:</label>
+        <input type="date" name="coreEndDate" />
+
+        <label>Name(s):</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="coreNames" value="Raman Chaudhary"> Raman Chaudhary</label>
+          <label><input type="checkbox" name="coreNames" value="Dinesh Parmar"> Dinesh Parmar</label>
+          <label><input type="checkbox" name="coreNames" value="Vinod Singh"> Vinod Singh</label>
+          <label><input type="checkbox" name="coreNames" value="Devendra Saraswat"> Devendra Saraswat</label>
+          <label><input type="checkbox" name="coreNames" value="Dinesh Sagar"> Dinesh Sagar</label>
+          <label><input type="checkbox" name="coreNames" value="Bhagwati Singh"> Bhagwati Singh</label>
+          <label><input type="checkbox" name="coreNames" value="Parwat Singh"> Parwat Singh</label>
+          <label><input type="checkbox" name="coreNames" value="Jitendra Sharma"> Jitendra Sharma</label>
+          <label><input type="checkbox" name="coreNames" value="Bhadur Singh"> Bhadur Singh</label>
+          <label><input type="checkbox" name="coreNames" value="TI Jaipur"> TI Jaipur</label>
+          <label><input type="checkbox" name="coreNames" value="Devendra Sharma"> Devendra Sharma</label>
+          <label><input type="checkbox" name="coreNames" value="Hariom"> Hariom</label>
+          <label><input type="checkbox" name="coreNames" value="Mangal"> Mangal</label>
+          <label><input type="checkbox" name="coreNames" value="Satendra Singh (Contractor)"> Satendra Singh (Contractor)</label>
+          <label><input type="checkbox" name="coreNames" value="Gaurav"> Gaurav</label>
+          <label><input type="checkbox" name="coreNames" value="Rahul"> Rahul</label>
+          <label><input type="checkbox" name="coreNames" value="Gopal"> Gopal</label>
+          <label><input type="checkbox" name="coreNames" value="Amit 2nd"> Amit 2nd</label>
+          <label><input type="checkbox" name="coreNames" value="Sugandh"> Sugandh</label>
+          <label><input type="checkbox" name="coreNames" value="Vijay"> Vijay</label>
+          <label><input type="checkbox" name="coreNames" value="Raj Kumar"> Raj Kumar</label>
+          <label><input type="checkbox" name="coreNames" value="Vipin"> Vipin</label>
+          <label><input type="checkbox" name="coreNames" value="Sonu"> Sonu</label>
+          <label><input type="checkbox" name="coreNames" value="Aakash"> Aakash</label>
+          <label><input type="checkbox" name="coreNames" value="Yogesh"> Yogesh</label>
+          <label><input type="checkbox" name="coreNames" value="Devendra 3rd"> Devendra 3rd</label>
+          <label><input type="checkbox" name="coreNames" value="Parshuram"> Parshuram</label>
+          <label><input type="checkbox" name="coreNames" value="Ram Kumar"> Ram Kumar</label>
+          <label><input type="checkbox" name="coreNames" value="Jaypal"> Jaypal</label>
+          <label><input type="checkbox" name="coreNames" value="Dushyant"> Dushyant</label>
+          <label><input type="checkbox" name="coreNames" value="Khaman"> Khaman</label>
+        </div>
+
+        <label>Design Number:</label>
+        <select name="coreDesign">
+          <option value="">-- Select Design Number --</option>
+          <option>1761/ 400 KVA</option>
+          <option>1827/ 315 KVA</option>
+        </select>
+
+        <label>Remarks:</label>
+        <textarea name="coreRemarks" rows="3"></textarea>
+      </div>
+
+      <!-- Coil Assembly Section -->
+      <div id="coilAssemblySection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="coilStartDate" />
+
+        <label>End Date:</label>
+        <input type="date" name="coilEndDate" />
+
+        <label>Name(s):</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="coilNames" value="Parshu Ram"> Parshu Ram</label>
+          <label><input type="checkbox" name="coilNames" value="Devki nandan"> Devki nandan</label>
+          <label><input type="checkbox" name="coilNames" value="Bahadur Singh"> Bahadur Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Inder Dev"> Inder Dev</label>
+          <label><input type="checkbox" name="coilNames" value="Ganesh Das"> Ganesh Das</label>
+          <label><input type="checkbox" name="coilNames" value="Hariom"> Hariom</label>
+          <label><input type="checkbox" name="coilNames" value="Gora Chand"> Gora Chand</label>
+          <label><input type="checkbox" name="coilNames" value="Tej Singh"> Tej Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Jitendra"> Jitendra</label>
+          <label><input type="checkbox" name="coilNames" value="Chandresh"> Chandresh</label>
+          <label><input type="checkbox" name="coilNames" value="Devendra Tomar"> Devendra Tomar</label>
+          <label><input type="checkbox" name="coilNames" value="Gaurav"> Gaurav</label>
+          <label><input type="checkbox" name="coilNames" value="Mahendra Singh"> Mahendra Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Pawan Kumar"> Pawan Kumar</label>
+          <label><input type="checkbox" name="coilNames" value="Dushyant"> Dushyant</label>
+          <label><input type="checkbox" name="coilNames" value="Vijay Veer"> Vijay Veer</label>
+          <label><input type="checkbox" name="coilNames" value="Bhagwati"> Bhagwati</label>
+          <label><input type="checkbox" name="coilNames" value="Omveer Singh"> Omveer Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Amit Singh"> Amit Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Khajan Singh"> Khajan Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Mangal Das"> Mangal Das</label>
+          <label><input type="checkbox" name="coilNames" value="Vinod"> Vinod</label>
+          <label><input type="checkbox" name="coilNames" value="Dinesh Parmar"> Dinesh Parmar</label>
+          <label><input type="checkbox" name="coilNames" value="Gulaab Singh"> Gulaab Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Dinesh Sagar"> Dinesh Sagar</label>
+          <label><input type="checkbox" name="coilNames" value="Naved Ahmed"> Naved Ahmed</label>
+          <label><input type="checkbox" name="coilNames" value="Parwat Singh"> Parwat Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Raman Chaudhary"> Raman Chaudhary</label>
+          <label><input type="checkbox" name="coilNames" value="Jaipal Singh"> Jaipal Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Devendra Sarswat"> Devendra Sarswat</label>
+          <label><input type="checkbox" name="coilNames" value="Vipin"> Vipin</label>
+          <label><input type="checkbox" name="coilNames" value="Satyaveer Contractor"> Satyaveer Contractor</label>
+          <label><input type="checkbox" name="coilNames" value="Sonu"> Sonu</label>
+          <label><input type="checkbox" name="coilNames" value="Khaman"> Khaman</label>
+          <label><input type="checkbox" name="coilNames" value="Gopal"> Gopal</label>
+          <label><input type="checkbox" name="coilNames" value="Devendra Singh"> Devendra Singh</label>
+          <label><input type="checkbox" name="coilNames" value="Sachin"> Sachin</label>
+          <label><input type="checkbox" name="coilNames" value="Satendra Singh"> Satendra Singh</label>
+        </div>
+
+        <label>Number of LV Coil:</label>
+        <select name="lvCoils">
+          <option value="">-- Select Number --</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+
+        <label>Design Number:</label>
+        <select name="coilDesign">
+          <option value="">-- Select Design Number --</option>
+          <option>1761/400 KVA</option>
+          <option>1827/315 KVA</option>
+        </select>
+
+        <label>KVA:</label>
+        <select name="kva">
+          <option value="">-- Select KVA --</option>
+          <option>400</option>
+          <option>1000</option>
+          <option>100</option>
+        </select>
+
+        <label>Remarks:</label>
+        <textarea name="coilRemarks" rows="3"></textarea>
+      </div>
+
       <button type="submit">Submit</button>
     </form>
   </div>
 
   <script>
-    // Function to manually get URL parameter 'job' for file:// URLs
     function getParam(name) {
-      if (window.location.search && window.location.search.length > 1) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(name);
-      } else {
-        const href = window.location.href;
-        const queryIndex = href.indexOf('?');
-        if (queryIndex === -1) return null;
-        const queryString = href.substring(queryIndex + 1);
-        const params = queryString.split('&');
-        for (const param of params) {
-          const [key, value] = param.split('=');
-          if (key === name) return decodeURIComponent(value || '');
-        }
-        return null;
-      }
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    function toggleSections() {
+      const dept = document.getElementById('department').value;
+      document.getElementById('coreAssemblySection').style.display = (dept === 'CORE ASSEMBLY') ? 'block' : 'none';
+      document.getElementById('coilAssemblySection').style.display = (dept === 'COIL ASSEMBLY') ? 'block' : 'none';
+    }
+
+    window.onload = function() {
       const jobParam = getParam('job');
-      const jobInput = document.getElementById('jobNumber');
       if (jobParam) {
-        jobInput.value = jobParam;
-        jobInput.setAttribute('readonly', true);
-      } else {
-        // If no job param, keep input editable as normal
-        jobInput.removeAttribute('readonly');
+        document.getElementById('jobNumber').value = jobParam;
+        document.getElementById('jobNumber').setAttribute('readonly', true);
       }
-
-      document.getElementById('jobForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Job number submitted: ' + this.jobNumber.value);
-      });
-    });
+    }
   </script>
-
-  <!--
-    Note:
-    Due to browser security restrictions, query parameters may not be reliably accessible
-    when opening local files (file:// protocol).
-    For consistent results, serve this file via a local web server, e.g. run:
-    python -m http.server
-    and access via http://localhost:8000/qrcodes_as_ujrl_fixed.html?job=12546
-  -->
 </body>
 </html>
-
