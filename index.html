@@ -262,3 +262,40 @@
   </script>
 </body>
 </html>
+<script>
+  document.getElementById("jobForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = new URLSearchParams();
+
+    const groupedValues = {};
+
+    for (const [key, value] of formData.entries()) {
+      if (groupedValues[key]) {
+        groupedValues[key].push(value);
+      } else {
+        groupedValues[key] = [value];
+      }
+    }
+
+    // Convert multiple values into comma-separated strings
+    for (const key in groupedValues) {
+      data.append(key, groupedValues[key].join(", "));
+    }
+
+    fetch("YOUR_WEB_APP_URL_HERE", {
+      method: "POST",
+      body: data
+    })
+    .then(response => response.text())
+    .then(result => {
+      alert("Form submitted successfully!");
+      form.reset();
+    })
+    .catch(error => {
+      alert("Error submitting form: " + error.message);
+    });
+  });
+</script>
