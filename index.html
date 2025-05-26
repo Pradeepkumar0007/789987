@@ -262,16 +262,19 @@
   </script>
 </body>
 </html>
+
 <script>
   document.getElementById("jobForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission
 
     const form = e.target;
     const formData = new FormData(form);
+    
+    // Convert FormData to URLSearchParams for application/x-www-form-urlencoded POST
     const data = new URLSearchParams();
 
+    // Group multiple values (like checkboxes) with same name
     const groupedValues = {};
-
     for (const [key, value] of formData.entries()) {
       if (groupedValues[key]) {
         groupedValues[key].push(value);
@@ -280,14 +283,18 @@
       }
     }
 
-    // Convert multiple values into comma-separated strings
+    // Append grouped keys as comma-separated strings
     for (const key in groupedValues) {
       data.append(key, groupedValues[key].join(", "));
     }
 
-    fetch("YOUR_WEB_APP_URL_HERE", {
+    // POST to your Google Apps Script Web App URL
+    fetch("https://script.google.com/macros/s/AKfycbxVGlqjrJBuaGz5so9v5zlqAt17ZjzU1hw-JnUx4GQgWt82D1KFABM-CjoQIPRk01fw/exec", {
       method: "POST",
-      body: data
+      body: data,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     })
     .then(response => response.text())
     .then(result => {
@@ -299,3 +306,4 @@
     });
   });
 </script>
+
