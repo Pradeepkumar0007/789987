@@ -141,6 +141,10 @@
       background-color: #e8f5e9 !important;
       border-color: #4caf50 !important;
     }
+    .job-number-highlight {
+      background-color: #fff3cd !important;
+      border-color: #ffc107 !important;
+    }
   </style>
 </head>
 <body>
@@ -542,6 +546,10 @@
     <div class="modal-content">
       <h2>Report a Problem</h2>
       <form id="problemForm">
+        <!-- JOB NUMBER FIELD ADDED HERE -->
+        <label for="problemJobNumber">Job Number:</label>
+        <input type="text" id="problemJobNumber" name="problemJobNumber" placeholder="Enter Job Number" required />
+
         <label for="problemDepartment">Department:</label>
         <select id="problemDepartment" name="problemDepartment" required>
           <option value="">-- Select Department --</option>
@@ -624,11 +632,26 @@
 
     function openProblemModal() {
       document.getElementById('problemModal').style.display = 'block';
+      
+      // Auto-fill job number from main form if available
+      const mainJobNumber = document.getElementById('jobNumber').value.trim();
+      if (mainJobNumber) {
+        const problemJobInput = document.getElementById('problemJobNumber');
+        problemJobInput.value = mainJobNumber;
+        problemJobInput.classList.add('job-number-highlight');
+      }
+      
+      // Auto-fill department from main form if selected
+      const mainDepartment = document.getElementById('department').value;
+      if (mainDepartment) {
+        document.getElementById('problemDepartment').value = mainDepartment;
+      }
     }
 
     function closeProblemModal() {
       document.getElementById('problemModal').style.display = 'none';
       document.getElementById('problemForm').reset();
+      document.getElementById('problemJobNumber').classList.remove('job-number-highlight');
     }
 
     window.onclick = function(event) {
@@ -805,6 +828,7 @@
     function submitProblemReport(formData, photoData, fileName) {
       const data = new URLSearchParams();
       data.append('formType', 'problem');
+      data.append('problemJobNumber', formData.get('problemJobNumber')); // JOB NUMBER ADDED
       data.append('problemDepartment', formData.get('problemDepartment'));
       data.append('issueType', formData.get('issueType'));
       data.append('problemDescription', formData.get('problemDescription'));
@@ -833,5 +857,3 @@
   </script>
 </body>
 </html>
-
-
