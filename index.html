@@ -23,12 +23,17 @@
       color: #0077cc;
       margin-bottom: 20px;
     }
+    h2 {
+      text-align: center;
+      color: #ffc107;
+      margin-bottom: 20px;
+    }
     label {
       font-weight: 600;
       display: block;
       margin-top: 1rem;
     }
-    input[type="text"], select, input[type="date"], textarea {
+    input[type="text"], select, input[type="date"], input[type="time"], input[type="number"], textarea, input[type="file"] {
       width: 100%;
       padding: 8px;
       margin-top: 4px;
@@ -47,35 +52,41 @@
     .checkbox-group label {
       display: block;
       margin-bottom: 4px;
+      font-weight: normal;
     }
     button {
-  	margin-top: 20px;
-  	width: 100%;
-  	padding: 10px;
-  	background: #0077cc;
-  	color: white;
-  	border: none;
-  	border-radius: 6px;
-  	font-size: 16px;
-  	cursor: pointer;
-  	transition: background-color 0.3s ease, transform 0.2s ease;
-	}
-
-	button:hover {
-  	background-color: #005fa3;
-  	transform: scale(1.05);
-	}
-
-	button:active {
-  	transform: scale(0.97);
-	}
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background-color: #005fa3;
+      transform: scale(1.05);
+    }
+    button:active {
+      transform: scale(0.97);
+    }
+    .problem-btn {
+      background: #ffc107;
+      color: #000;
+      font-weight: 600;
+    }
+    .problem-btn:hover {
+      background: #e0a800;
+    }
     .address {
       text-align: center;
       font-size: 14px;
       color: #555;
       margin-bottom: 20px;
       font-weight: 500;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .section {
       margin-top: 20px;
@@ -83,6 +94,52 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       background: #f8f8f8;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .modal-content {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .btn-group button {
+      flex: 1;
+    }
+    .cancel-btn {
+      background: #dc3545;
+    }
+    .cancel-btn:hover {
+      background: #c82333;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      padding: 8px 12px;
+      font-size: 8px;
+      color: #555;
+    }
+    .auto-filled {
+      background-color: #e8f5e9 !important;
+      border-color: #4caf50 !important;
     }
   </style>
 </head>
@@ -92,7 +149,11 @@
     <div class="address">Mathura Road Artoni, Agra - 282007, India</div>	  
     <form id="jobForm">
       <label for="jobNumber">Job Number:</label>
-      <input type="text" id="jobNumber" name="jobNumber" />
+      <input type="text" id="jobNumber" name="jobNumber" placeholder="Enter Job Number" />
+
+      <!-- Hidden fields to store fetched values -->
+      <input type="hidden" id="fetchedDesign" name="fetchedDesign" />
+      <input type="hidden" id="fetchedKVA" name="fetchedKVA" />
 
       <label for="department">Department:</label>
       <select id="department" name="department" onchange="toggleSections()" required>
@@ -118,58 +179,17 @@
       <div id="coreAssemblySection" class="section" style="display:none;">
         <label>Start Date:</label>
         <input type="date" name="coreStartDate" />
-
         <label>End Date:</label>
         <input type="date" name="coreEndDate" />
-
         <label>Name(s):</label>
         <div class="checkbox-group">
           <label><input type="checkbox" name="coreNames" value="Aakash"> Aakash</label>
           <label><input type="checkbox" name="coreNames" value="Amit 2nd"> Amit 2nd</label>
-          <label><input type="checkbox" name="coreNames" value="Bhadur Singh"> Bhadur Singh</label>
-          <label><input type="checkbox" name="coreNames" value="Bhagwati Singh"> Bhagwati Singh</label>
-          <label><input type="checkbox" name="coreNames" value="Devendra 3rd"> Devendra 3rd</label>
-          <label><input type="checkbox" name="coreNames" value="Devendra Saraswat"> Devendra Saraswat</label>
-          <label><input type="checkbox" name="coreNames" value="Devendra Sharma"> Devendra Sharma</label>
-          <label><input type="checkbox" name="coreNames" value="Dinesh Parmar"> Dinesh Parmar</label>
-          <label><input type="checkbox" name="coreNames" value="Dinesh Sagar"> Dinesh Sagar</label>
-          <label><input type="checkbox" name="coreNames" value="Dushyant"> Dushyant</label>
-          <label><input type="checkbox" name="coreNames" value="Gaurav"> Gaurav</label>
-          <label><input type="checkbox" name="coreNames" value="Gopal"> Gopal</label>
-          <label><input type="checkbox" name="coreNames" value="Hariom"> Hariom</label>
-          <label><input type="checkbox" name="coreNames" value="Jaypal"> Jaypal</label>
-          <label><input type="checkbox" name="coreNames" value="Jitendra Sharma"> Jitendra Sharma</label>
-          <label><input type="checkbox" name="coreNames" value="Khaman"> Khaman</label>
-          <label><input type="checkbox" name="coreNames" value="Mangal"> Mangal</label>
-          <label><input type="checkbox" name="coreNames" value="Parshuram"> Parshuram</label>
-          <label><input type="checkbox" name="coreNames" value="Parwat Singh"> Parwat Singh</label>
-          <label><input type="checkbox" name="coreNames" value="Rahul"> Rahul</label>
-          <label><input type="checkbox" name="coreNames" value="Raj Kumar"> Raj Kumar</label>
-          <label><input type="checkbox" name="coreNames" value="Ram Kumar"> Ram Kumar</label>
-          <label><input type="checkbox" name="coreNames" value="Raman Chaudhary"> Raman Chaudhary</label>
-          <label><input type="checkbox" name="coreNames" value="Sonu"> Sonu</label>
-          <label><input type="checkbox" name="coreNames" value="Sugandh"> Sugandh</label>
-          <label><input type="checkbox" name="coreNames" value="Vijay"> Vijay</label>
-          <label><input type="checkbox" name="coreNames" value="Vinod Singh"> Vinod Singh</label>
-          <label><input type="checkbox" name="coreNames" value="Ram Kumar"> Ram Kumar</label>
-          <label><input type="checkbox" name="coreNames" value="Vipin"> Vipin</label>
-          <label><input type="checkbox" name="coreNames" value="Yogesh"> Yogesh</label>
         </div>
-
         <label>Design Number:</label>
-        <select name="coreDesign">
-          <option value="">-- Select Design Number --</option>
-          <option>1726/250 KVA</option>
-          <option>1798/R1 1600 KVA</option>
-	      <option>1866/4250 KVA</option>
-	      <option>1797/1250 KVA</option>
-	      <option>1748/2500 KVA</option>
-	      <option>1872/630 KVA</option>
-          <option>1406/10 MVA</option>
-	      <option>1866/4250 KVA</option>
-	      <option>1848/1000 KVA</option>
-        </select>
-
+        <input type="text" name="coreDesign" id="coreDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="coreKVA" id="coreKVAInput" readonly />
         <label>Remarks:</label>
         <textarea name="coreRemarks" rows="3"></textarea>
       </div>
@@ -178,114 +198,39 @@
       <div id="coilAssemblySection" class="section" style="display:none;">
         <label>Start Date:</label>
         <input type="date" name="coilStartDate" />
-
         <label>End Date:</label>
         <input type="date" name="coilEndDate" />
-
         <label>Name(s):</label>
         <div class="checkbox-group">
           <label><input type="checkbox" name="coilNames" value="Amit Singh"> Amit Singh</label>
           <label><input type="checkbox" name="coilNames" value="Bahadur Singh"> Bahadur Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Bhagwati"> Bhagwati</label>
-          <label><input type="checkbox" name="coilNames" value="Chandresh"> Chandresh</label>
-          <label><input type="checkbox" name="coilNames" value="Devendra Sarswat"> Devendra Sarswat</label>
-          <label><input type="checkbox" name="coilNames" value="Devendra Singh"> Devendra Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Devendra Tomar"> Devendra Tomar</label>
-          <label><input type="checkbox" name="coilNames" value="Devki nandan"> Devki nandan</label>
-          <label><input type="checkbox" name="coilNames" value="Dinesh Parmar"> Dinesh Parmar</label>
-          <label><input type="checkbox" name="coilNames" value="Dinesh Sagar"> Dinesh Sagar</label>
-          <label><input type="checkbox" name="coilNames" value="Dushyant"> Dushyant</label>
-          <label><input type="checkbox" name="coilNames" value="Ganesh Das"> Ganesh Das</label>
-          <label><input type="checkbox" name="coilNames" value="Gaurav"> Gaurav</label>
-          <label><input type="checkbox" name="coilNames" value="Gopal"> Gopal</label>
-          <label><input type="checkbox" name="coilNames" value="Gora Chand"> Gora Chand</label>
-          <label><input type="checkbox" name="coilNames" value="Gulaab Singh"> Gulaab Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Hariom"> Hariom</label>
-          <label><input type="checkbox" name="coilNames" value="Inder Dev"> Inder Dev</label>
-          <label><input type="checkbox" name="coilNames" value="Jaipal Singh"> Jaipal Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Jitendra"> Jitendra</label>
-          <label><input type="checkbox" name="coilNames" value="Khajan Singh"> Khajan Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Khaman"> Khaman</label>
-          <label><input type="checkbox" name="coilNames" value="Mahendra Singh"> Mahendra Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Mangal Das"> Mangal Das</label>
-          <label><input type="checkbox" name="coilNames" value="Naved Ahmed"> Naved Ahmed</label>
-          <label><input type="checkbox" name="coilNames" value="Omveer Singh"> Omveer Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Parshu Ram"> Parshu Ram</label>
-          <label><input type="checkbox" name="coilNames" value="Parwat Singh"> Parwat Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Pawan Kumar"> Pawan Kumar</label>
-          <label><input type="checkbox" name="coilNames" value="Raman Chaudhary"> Raman Chaudhary</label>
-          <label><input type="checkbox" name="coilNames" value="Sachin"> Sachin</label>
-          <label><input type="checkbox" name="coilNames" value="Satendra Singh"> Satendra Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Sonu"> Sonu</label>
-          <label><input type="checkbox" name="coilNames" value="Tej Singh"> Tej Singh</label>
-          <label><input type="checkbox" name="coilNames" value="Vijay Veer"> Vijay Veer</label>
-          <label><input type="checkbox" name="coilNames" value="Vinod"> Vinod</label>
-          <label><input type="checkbox" name="coilNames" value="Vipin"> Vipin</label>
         </div>
-
         <label>Number of LV Coil:</label>
         <select name="lvCoils">
           <option value="">-- Select Number --</option>
           <option value="1">1</option>
           <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
         </select>
         <label>Number of HV Coil:</label>
         <select name="HvCoils">
           <option value="">-- Select Number --</option>
           <option value="3">3</option>
           <option value="6">6</option>
-          <option value="12">12</option>
-          <option value="24">24</option>
         </select>
         <label>Design Number:</label>
-        <select name="coilDesign">
-          <option value="">-- Select Design Number --</option>
-          <option>1726/250 KVA</option>
-          <option>1798/R1 1600 KVA</option>
-	  <option>1866/4250 KVA</option>
-	  <option>1797/1250 KVA</option>
-	  <option>1748/2500 KVA</option>
-	  <option>1872/630 KVA</option>
-          <option>1406/10 MVA</option>
-	  <option>1866/4250 KVA</option>
-	  <option>1848/1000 KVA</option>
-        </select>
-
+        <input type="text" name="coilDesign" id="coilDesignInput" readonly />
         <label>KVA:</label>
-        <select name="kva">
-          <option value="">-- Select KVA --</option>
-          <option>250 KVA</option>
-	      <option>400 KVA</option>
-          <option>1000 KVA</option>
-          <option>1600 KVA</option>
-          <option>500 KVA</option>
-	      <option>630 KVA</option>
-	      <option>10 MVA</option>
-	      <option>4250 KVA</option>
-	      <option>1250 KVA</option>
-	      <option>2500 KVA</option>
-          <option>63 KVA</option>
-		  <option>100 KVA</option>
-        </select>
-
+        <input type="text" name="kva" id="coilKVAInput" readonly />
         <label>Remarks:</label>
         <textarea name="coilRemarks" rows="3"></textarea>
       </div>
+
+      <!-- Megger Section -->
       <div id="meggerSection" class="section" style="display:none;">
         <label>Date:</label>
         <input type="date" name="meggerDate" />
-
         <label>Megger Status:</label>
         <input type="text" name="meggerStatus" />
-
         <label>Megger Checked By:</label>
         <select name="meggerCheckedBy">
           <option value="">-- Select Name --</option>
@@ -294,529 +239,358 @@
           <option>Om Prakash</option>
           <option>Rambabu</option>
           <option>Akash</option>
-         </select>
-
+        </select>
+        <label>Design Number:</label>
+        <input type="text" name="meggerDesign" id="meggerDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="meggerKVA" id="meggerKVAInput" readonly />
         <label>Remarks:</label>
         <textarea name="meggerRemarks" rows="3"></textarea>
       </div>
+
       <!-- Fabrication Lid Section -->
       <div id="fabricationLidSection" class="section" style="display:none;">
-	<label>Date:</label>
-	<input type="date" name="fabLidDate" />
+        <label>Date:</label>
+        <input type="date" name="fabLidDate" />
+        <label>Tank Lid No:</label>
+        <input type="text" name="tankLidNo" />
+        <label>Design Number:</label>
+        <input type="text" name="fabLidDesign" id="fabLidDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="fabLidKVA" id="fabLidKVAInput" readonly />
+        <label>Remarks:</label>
+        <textarea name="fabLidRemarks" rows="3"></textarea>
+      </div>
 
-	<label>Tank Lid No:</label>
-	<input type="text" name="tankLidNo" />
+      <!-- Oven Out Section -->
+      <div id="ovenOutSection" class="section" style="display:none;">
+        <label>Out Date:</label>
+        <input type="date" name="ovenOutDate" />
+        <label>Out Time:</label>
+        <input type="time" name="ovenOutTime" />
+        <label>Oven No:</label>
+        <select name="ovenNoOut">
+          <option value="">-- Select Oven No --</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+        <label>Design Number:</label>
+        <input type="text" name="ovenOutDesign" id="ovenOutDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="ovenOutKVA" id="ovenOutKVAInput" readonly />
+        <label>Remarks:</label>
+        <textarea name="ovenOutRemarks" rows="3"></textarea>
+      </div>
 
-	<label>Remarks:</label>
-	<textarea name="fabLidRemarks" rows="3"></textarea>
-     </div>
-     <!-- Oven Out Section -->
-     <div id="ovenOutSection" class="section" style="display:none;">
-  	<label>Out Date:</label>
-  	<input type="date" name="ovenOutDate" />
+      <!-- Oven In Section -->
+      <div id="ovenInSection" class="section" style="display:none;">
+        <label>In Date:</label>
+        <input type="date" name="ovenInDate" />
+        <label>In Time:</label>
+        <input type="time" name="ovenInTime" />
+        <label>Oven No:</label>
+        <select name="ovenNoIn">
+          <option value="">-- Select Oven No --</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+        <label>Design Number:</label>
+        <input type="text" name="ovenInDesign" id="ovenInDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="ovenInKVA" id="ovenInKVAInput" readonly />
+        <label>Remarks:</label>
+        <textarea name="ovenInRemarks" rows="3"></textarea>
+      </div>
 
-  	<label>Out Time:</label>
-  	<input type="time" name="ovenOutTime" />
-
-  	<label>Oven No:</label>
-  	<select name="ovenNoOut">
-    	  <option value="">-- Select Oven No --</option>
-    	  <option value="1">1</option>
-    	  <option value="2">2</option>
-    	  <option value="3">3</option>
-    	  <option value="4">4</option>
-    	  <option value="5">5</option>
-    	  <option value="6">6</option>
-    	  <option value="7">7</option>
-    	  <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-  	</select>
-
-  	<label>Remarks:</label>
-  	<textarea name="ovenOutRemarks" rows="3"></textarea>
-     </div>
-     <!-- Oven In Section -->
-     <div id="ovenInSection" class="section" style="display:none;">
-  	<label>In Date:</label>
-  	<input type="date" name="ovenInDate" />
-
-  	<label>In Time:</label>
-  	<input type="time" name="ovenInTime" />
-
-  	<label>Oven No:</label>
-  	<select name="ovenNoIn">
-    	  <option value="">-- Select Oven No --</option>
-    	  <option value="1">1</option>
-    	  <option value="2">2</option>
-    	  <option value="3">3</option>
-    	  <option value="4">4</option>
-    	  <option value="5">5</option>
-    	  <option value="6">6</option>
-    	  <option value="7">7</option>
-    	  <option value="8">8</option>
-    	  <option value="9">9</option>
-    	  <option value="10">10</option>
-  	</select>
-
-  	<label>Remarks:</label>
-  	<textarea name="ovenInRemarks" rows="3"></textarea>
-	</div>
-     <div id="tankUpSection" class="section" style="display:none;">
-  	<label>Start Date:</label>
-  	<input type="date" name="tankUpStartDate" />
-
-  	<label>End Date:</label>
-  	<input type="date" name="tankUpEndDate" />
-
-  	<label>Names:</label>
-  	<div class="checkbox-group">
-    	  <label><input type="checkbox" name="tankUpNames" value="Lallu Singh" /> Lallu Singh</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Suraj Pal (H)" /> Suraj Pal (H)</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Ram Pal Singh" /> Ram Pal Singh</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Nathu Singh" /> Nathu Singh</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Roshan Singh" /> Roshan Singh</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Jitendra Singh 2 nd" /> Jitendra Singh 2 nd</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Sanjay Chaudhary" /> Sanjay Chaudhary</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Narendra Singh 3 rd" /> Narendra Singh 3 rd</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Randheer Singh (H)" /> Randheer Singh (H)</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Rahul" /> Rahul</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Charan Singh" /> Charan Singh</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Satyendra" /> Satyendra</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Munender Singh (Oil )" /> Munender Singh (Oil )</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Lakhan Singh" /> Lakhan Singh</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Satyaveer (Contractor)" /> Satyaveer (Contractor)</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Suresh" /> Suresh</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Pawan" /> Pawan</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Sohail (Contractor)" /> Sohail (Contractor)</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Tejvir" /> Tejvir</label>
-    	  <label><input type="checkbox" name="tankUpNames" value="Deepak" /> Deepak</label>
-  	</div>
-
-  	<label>Production Ref No.:</label>
-  	<input type="text" name="tankUpRefNo" />
-
-  	<label>Design Number:</label>
-  	<select name="tankUpDesignNo">
-    	  <option value="">-- Select Design Number --</option>
-    	  <option value="1726/250 KVA">1726/250 KVA</option>
-    	  <option value="1798/R1 1600 KVA">1798/R1 1600 KVA</option>
-	      <option value="1866/4250 KVA">1866/4250 KVA</option>
-	      <option value="1797/1250 KVA">1797/1250 KVA</option>
-	      <option value="1748/2500 KVA">1748/2500 KVA</option>
-	      <option value="1872/630 KVA">1872/630 KVA</option>
-          <option value="1406/10 KVA">1406/10 MVA</option>
-	      <option value="1866/4250 KVA">1866/4250 KVA</option>
-	      <option value="1848/1000 KVA">1848/1000 KVA</option>
-	      <option value="1795/R1 1000 KVA">1795/R1 1000 KVA</option>
-	      <option value="1795/1000 KVA">1795/1000 KVA</option>
-	  
-  	</select>
-
-  	<label>Testing Unique Number:</label>
-  	<input type="text" name="tankUpTestingNo" />
-
-  	<label>Client Unique No:</label>
-  	<input type="text" name="tankUpClientNo" />
-
-  	<label>Tank:</label>
-  	<select name="tankType">
-    	<option value="">-- Select Tank Type --</option>
-    	<option value="OUT SOURCE">OUT SOURCE</option>
-    	<option value="INHOUSE">INHOUSE</option>
-  	</select>
-
-  	<label>KVA:</label>
-  	<select name="tankUpKVA">
-    	<option value="">-- Select KVA --</option>
-    	  <option value="250 KVA">250 KVA</option>
-    	  <option value="500 KVA">500 KVA</option>
-    	  <option value="1600 KVA">1600 KVA</option>
-	      <option value="400 KVA">400 KVA</option>
-          <option value="1000 KVA">1000 KVA</option>
-	      <option value="630 KVA">630 KVA</option>
-	      <option value="10 MVA">10 MVA</option>
-	      <option value="4250 KVA">4250 KVA</option>
-	      <option value="1250 KVA">1250 KVA</option>
-	      <option value="2500 KVA">2500 KVA</option>
-  	</select>
-
-  	<label>Remarks:</label>
-  	<textarea name="tankUpRemarks" rows="3"></textarea>
-	</div>
-        <div id="testingSection" class="section" style="display:none;">
-  	<label>Date:</label>
-  	<input type="date" name="testingDate" />
-
-  	<label>Serial No:</label>
-  	<input type="text" name="serialNo" />
-
-  	<label>Unique No.:</label>
-  	<label>Unique No.:</label>
-    <input type="text" name="uniqueNo" placeholder="Enter Unique No." />
-
-
-  	<label>Rating KVA:</label>
-  	<select name="ratingKVA">
-    	  <option value="">-- Select Rating --</option>
-    	  <option value="250 KVA">250 KVA</option>
-    	  <option value="400 KVA">400 KVA</option>
-    	  <option value="1600 KVA">1600 KVA</option>
-	      <option value="1000 KVA">1000 KVA</option>
-	      <option value="500 KVA">500 KVA</option>
-	      <option value="630 KVA">630 KVA</option>
-	      <option value="250 KVA">10 MVA</option>
-	      <option value="4250 KVA">4250 KVA</option>
-	      <option value="1250 KVA">1250 KVA</option>
-	      <option value="2500 KVA">2500 KVA</option>
-		  <option value="63 KVA">63 KVA</option>
-		  <option value="100 KVA">100 KVA</option>
-           
-  	</select>
-
-  	<label>Losses:</label><br/>
-  	<label><input type="radio" name="losses" value="OK" /> OK</label>
-  	<label><input type="radio" name="losses" value="Not OK" /> Not OK</label>
-
-  	<br/><label>UNB:</label><br/>
-  	<label><input type="radio" name="unb" value="Yes" /> Yes</label>
-  	<label><input type="radio" name="unb" value="No" /> No</label>
-
-  	<br/><label>AI:</label><br/>
-  	<label><input type="radio" name="ai" value="Yes" /> Yes</label>
-  	<label><input type="radio" name="ai" value="No" /> No</label>
-
-  	<br/><label>PI:</label><br/>
-  	<label><input type="radio" name="pi" value="Yes" /> Yes</label>
-  	<label><input type="radio" name="pi" value="No" /> No</label>
-
-  	<label>Tested By:</label>
-  	<select name="testedBy">
-    	  <option value="">-- Select Tester --</option>
-    	  <option value="Mr. Amit Sharma">Mr. Amit Sharma</option>
-    	  <option value="Mr. Dinesh Srivastav">Mr. Dinesh Srivastav</option>
-  	</select>
-
-  	<label>Remark:</label>
-  	<textarea name="testingRemark" rows="3"></textarea>
-	</div>
-        <div id="topYokeSection" class="section" style="display:none;">
-  	<label>topYokeStartDate</label>
-  	<input type="date" name="startDate" />
-
-  	<label>topYokeEndDate</label>
-  	<input type="date" name="endDate" />
-        <label>topYokeNames</label>
+      <!-- Tank Up Section -->
+      <div id="tankUpSection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="tankUpStartDate" />
+        <label>End Date:</label>
+        <input type="date" name="tankUpEndDate" />
+        <label>Names:</label>
         <div class="checkbox-group">
-  	  <label><input type="checkbox" name="names" value="Parshu Ram" /> Parshu Ram</label><br/>
-  	  <label><input type="checkbox" name="names" value="Devki Nandan" /> Devki Nandan</label><br/>
-  	  <label><input type="checkbox" name="names" value="Bahadur Singh" /> Bahadur Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Inder Dev" /> Inder Dev</label><br/>
-  	  <label><input type="checkbox" name="names" value="Ganesh Das" /> Ganesh Das</label><br/>
-  	  <label><input type="checkbox" name="names" value="Hariom" /> Hariom</label><br/>
-  	  <label><input type="checkbox" name="names" value="Gora Chand" /> Gora Chand</label><br/>
-  	  <label><input type="checkbox" name="names" value="Tej Singh" /> Tej Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Jitendra" /> Jitendra</label><br/>
-  	  <label><input type="checkbox" name="names" value="Chandresh" /> Chandresh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Devendra Tomar" /> Devendra Tomar</label><br/>
-  	  <label><input type="checkbox" name="names" value="Gaurav (H)" /> Gaurav (H)</label><br/>
-  	  <label><input type="checkbox" name="names" value="Mahendra Singh" /> Mahendra Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Pawan Kumar (H)" /> Pawan Kumar (H)</label><br/>
-  	  <label><input type="checkbox" name="names" value="Dushyant (H)" /> Dushyant (H)</label><br/>
-  	  <label><input type="checkbox" name="names" value="Vijay Veer" /> Vijay Veer</label><br/>
-  	  <label><input type="checkbox" name="names" value="Bhagwati" /> Bhagwati</label><br/>
-  	  <label><input type="checkbox" name="names" value="Omveer Singh" /> Omveer Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Amit Singh" /> Amit Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Khajan Singh" /> Khajan Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Mangal Das" /> Mangal Das</label><br/>
-  	  <label><input type="checkbox" name="names" value="Vinod" /> Vinod</label><br/>
-  	  <label><input type="checkbox" name="names" value="Dinesh Parmar" /> Dinesh Parmar</label><br/>
-  	  <label><input type="checkbox" name="names" value="Gulaab Singh" /> Gulaab Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Dinesh Sagar" /> Dinesh Sagar</label><br/>
-  	  <label><input type="checkbox" name="names" value="Naved Ahmed" /> Naved Ahmed</label><br/>
-  	  <label><input type="checkbox" name="names" value="Parwat Singh" /> Parwat Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Raman Chaudhary" /> Raman Chaudhary</label><br/>
-  	  <label><input type="checkbox" name="names" value="Jaipal Singh (H)" /> Jaipal Singh (H)</label><br/>
-  	  <label><input type="checkbox" name="names" value="Devendra Sarswat" /> Devendra Sarswat</label><br/>
-  	  <label><input type="checkbox" name="names" value="Parminder Singh" /> Parminder Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Vipin Kumar" /> Vipin Kumar</label><br/>
-  	  <label><input type="checkbox" name="names" value="Pankaj" /> Pankaj</label><br/>
-  	  <label><input type="checkbox" name="names" value="Devendra Singh" /> Devendra Singh</label><br/>
-  	  <label><input type="checkbox" name="names" value="Keshav" /> Keshav</label><br/>
-  	  <label><input type="checkbox" name="names" value="Amit Bhadoriya" /> Amit Bhadoriya</label><br/>
-  	  <label><input type="checkbox" name="names" value="Satendra Singh" /> Satendra Singh</label><br/>
+          <label><input type="checkbox" name="tankUpNames" value="Lallu Singh" /> Lallu Singh</label>
+          <label><input type="checkbox" name="tankUpNames" value="Suraj Pal (H)" /> Suraj Pal (H)</label>
         </div>
-  	<label>topYokeKVA</label>
-  	<select name="kva">
-    	  <option value="">-- Select KVA --</option>
-    	  <option value="250 KVA">250 KVA</option>
-    	  <option value="400 KVA">400 KVA</option>
-    	  <option value="1600 KVA">1600 KVA</option>
-	      <option value="1000 KVA">1000 KVA</option>
-	      <option value="500 KVA">500 KVA</option>
-	      <option value="630 KVA">630 KVA</option>
-	      <option value="250 KVA">10 MVA</option>
-	      <option value="4250 KVA">4250 KVA</option>
-	      <option value="1250 KVA">1250 KVA</option>
-	      <option value="2500 KVA">2500 KVA</option>
-          <option value="63 KVA">63 KVA</option>
-		  <option value="100 KVA">100 KVA</option>
-		
-  	</select>
+        <label>Production Ref No.:</label>
+        <input type="text" name="tankUpRefNo" />
+        <label>Design Number:</label>
+        <input type="text" name="tankUpDesignNo" id="tankUpDesignInput" readonly />
+        <label>Testing Unique Number:</label>
+        <input type="text" name="tankUpTestingNo" />
+        <label>Client Unique No:</label>
+        <input type="text" name="tankUpClientNo" />
+        <label>Tank:</label>
+        <select name="tankType">
+          <option value="">-- Select Tank Type --</option>
+          <option value="OUT SOURCE">OUT SOURCE</option>
+          <option value="INHOUSE">INHOUSE</option>
+        </select>
+        <label>KVA:</label>
+        <input type="text" name="tankUpKVA" id="tankUpKVAInput" readonly />
+        <label>Remarks:</label>
+        <textarea name="tankUpRemarks" rows="3"></textarea>
+      </div>
 
-  	<label>topYokeRemarks</label>
-  	<textarea name="topYokeRemark" rows="3"></textarea>
-	</div>
-        <div id="tankFabricationSection" class="section" style="display:none;">
-  	<label>Date:</label>
-  	<input type="date" name="fabricationDate" />
+      <!-- Testing Section -->
+      <div id="testingSection" class="section" style="display:none;">
+        <label>Date:</label>
+        <input type="date" name="testingDate" />
+        <label>Serial No:</label>
+        <input type="text" name="serialNo" />
+        <label>Unique No.:</label>
+        <input type="text" name="uniqueNo" placeholder="Enter Unique No." />
+        <label>Design Number:</label>
+        <input type="text" name="testingDesign" id="testingDesignInput" readonly />
+        <label>Rating KVA:</label>
+        <input type="text" name="ratingKVA" id="testingKVAInput" readonly />
+        <label>Losses:</label><br/>
+        <label><input type="radio" name="losses" value="OK" /> OK</label>
+        <label><input type="radio" name="losses" value="Not OK" /> Not OK</label>
+        <br/><label>UNB:</label><br/>
+        <label><input type="radio" name="unb" value="Yes" /> Yes</label>
+        <label><input type="radio" name="unb" value="No" /> No</label>
+        <br/><label>AI:</label><br/>
+        <label><input type="radio" name="ai" value="Yes" /> Yes</label>
+        <label><input type="radio" name="ai" value="No" /> No</label>
+        <br/><label>PI:</label><br/>
+        <label><input type="radio" name="pi" value="Yes" /> Yes</label>
+        <label><input type="radio" name="pi" value="No" /> No</label>
+        <label>Tested By:</label>
+        <select name="testedBy">
+          <option value="">-- Select Tester --</option>
+          <option value="Mr. Amit Sharma">Mr. Amit Sharma</option>
+          <option value="Mr. Dinesh Srivastav">Mr. Dinesh Srivastav</option>
+        </select>
+        <label>Remark:</label>
+        <textarea name="testingRemark" rows="3"></textarea>
+      </div>
 
-  	<label>Tank No:</label>
-  	<input type="text" name="tankNo" />
-
-  	<label>Remark:</label>
-  	<textarea name="fabricationRemark" rows="3"></textarea>
-	</div>
-        <div id="ratioSection" class="section" style="display:none;">
-  	<label>Start Date:</label>
-  	<input type="date" name="ratioStartDate" />
-
-  	<label>End Date:</label>
-  	<input type="date" name="ratioEndDate" />
-
-  	<label>Testing Unique Number:</label>
-  	<input type="text" name="ratioTestingUniqueNo" />
-
-  	<label>Tested By:</label>
-  	<input type="text" name="testedByRatio" />
-
-  	<label>Remarks:</label>
-  	<textarea name="ratioRemarks" rows="3"></textarea>
-	</div>
-        <div id="paintShopSection" class="section" style="display:none;">
-  	<label>Start Date:</label>
-  	<input type="date" name="paintStartDate" />
-
-  	<label>End Date:</label>
-  	<input type="date" name="paintEndDate" />
-
-  	
+      <!-- Top Yoke Section -->
+      <div id="topYokeSection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="topYokeStartDate" />
+        <label>End Date:</label>
+        <input type="date" name="topYokeEndDate" />
         <label>Name(s):</label>
         <div class="checkbox-group">
-  	<label><input type="checkbox" name="painters" value="Ram Ratan" /> Ram Ratan</label><br/>
-  	<label><input type="checkbox" name="painters" value="Krishna (H)" /> Krishna (H)</label><br/>
-  	<label><input type="checkbox" name="painters" value="Ashok Kumar (H)" /> Ashok Kumar (H)</label><br/>
-  	<label><input type="checkbox" name="painters" value="Bahadur" /> Bahadur</label><br/>
-  	<label><input type="checkbox" name="painters" value="Deepak Yadav" /> Deepak Yadav</label><br/>
-  	<label><input type="checkbox" name="painters" value="Dhanveer" /> Dhanveer</label><br/>
-  	<label><input type="checkbox" name="painters" value="NARAYAN SINGH (H)" /> NARAYAN SINGH (H)</label><br/>
-  	<label><input type="checkbox" name="painters" value="Deevan (H)" /> Deevan (H)</label><br/>
+          <label><input type="checkbox" name="topYokeNames" value="Parshu Ram" /> Parshu Ram</label>
+          <label><input type="checkbox" name="topYokeNames" value="Devki Nandan" /> Devki Nandan</label>
         </div>
-  	<label>Tank No:</label>
-  	<input type="text" name="tankNo" />
+        <label>Design Number:</label>
+        <input type="text" name="topYokeDesign" id="topYokeDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="topYokeKVA" id="topYokeKVAInput" readonly />
+        <label>Remarks:</label>
+        <textarea name="topYokeRemark" rows="3"></textarea>
+      </div>
 
-  	<label>Design Number:</label>
-  	<select name="designNumber">
-    	  <option value="">-- Select Design Number --</option>
-    	  <option value="1802/250 KVA">1726/250 KVA</option>
-    	  <option value="1811/63 KVA">1798/R1 1600 KVA</option>
-	  <option value="1866/4250 KVA">1866/4250 KVA</option>
-	  <option value="1797/1250 KVA">1797/1250 KVA</option>
-	  <option value="1748/2500 KVA">1748/2500 KVA</option>
-	  <option value="1872/630 KVA">1872/630 KVA</option>
-          <option value="1406/10 KVA">1406/10 MVA</option>
-	  <option value="1866/4250 KVA">1866/4250 KVA</option>
-	  <option value="1848/1000 KVA">1848/1000 KVA</option>
-  	  </select>
+      <!-- Tank Fabrication Section -->
+      <div id="tankFabricationSection" class="section" style="display:none;">
+        <label>Date:</label>
+        <input type="date" name="fabricationDate" />
+        <label>Tank No:</label>
+        <input type="text" name="tankNo" />
+        <label>Design Number:</label>
+        <input type="text" name="tankFabDesign" id="tankFabDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="tankFabKVA" id="tankFabKVAInput" readonly />
+        <label>Remark:</label>
+        <textarea name="fabricationRemark" rows="3"></textarea>
+      </div>
 
-  	<label>Type:</label>
-  	<select name="paintType">
-     	  <option value="">-- Select Type --</option>
-    	  <option value="Inhouse">Inhouse</option>
-    	  <option value="Outside">Outside</option>
-  	</select>
+      <!-- Ratio Section -->
+      <div id="ratioSection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="ratioStartDate" />
+        <label>End Date:</label>
+        <input type="date" name="ratioEndDate" />
+        <label>Testing Unique Number:</label>
+        <input type="text" name="ratioTestingUniqueNo" />
+        <label>Design Number:</label>
+        <input type="text" name="ratioDesign" id="ratioDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="ratioKVA" id="ratioKVAInput" readonly />
+        <label>Tested By:</label>
+        <input type="text" name="testedByRatio" />
+        <label>Remarks:</label>
+        <textarea name="ratioRemarks" rows="3"></textarea>
+      </div>
 
-  	<label>Coat:</label>
-  	<select name="coat">
-    	  <option value="">-- Select Coat --</option>
-    	  <option value="Epoxy Primer - Intergard 906">Epoxy Primer - Intergard 906</option>
-    	  <option value="Synthetic Primer - Apcomin 100">Synthetic Primer - Apcomin 100</option>
-    	  <option value="Zinc Rich Primer 52">Zinc Rich Primer 52</option>
-    	  <option value="Zinc Phosphate 251">Zinc Phosphate 251</option>
-    	  <option value="Middle Cote - MIO">Middle Cote - MIO</option>
-    	  <option value="Finish PU 990">Finish PU 990</option>
-    	  <option value="Finish Syn">Finish Syn</option>
-    	  <option value="Finish PU138">Finish PU138</option>
-    	  <option value="Varnish">Varnish</option>
-    	  <option value="Inside Paint">Inside Paint</option>
-    	  <option value="Apcodur HB ZP Primer">Apcodur HB ZP Primer</option>
-    	  <option value="Apcthane CF 675 DA Grey">Apcthane CF 675 DA Grey</option>
-    	  <option value="Finish PU RAL7032">Finish PU RAL7032</option>
-    	  <option value="Bergerthane PU 631 Light Grey">Bergerthane PU 631 Light Grey</option>
-    	  <option value="Epilux 610 Primer">Epilux 610 Primer</option>
-    	  <option value="Finish PU RAL7035">Finish PU RAL7035</option>
-  	</select>
-
-  	<label>Remarks:</label>
-  	<textarea name="paintRemarks" rows="3"></textarea>
-	</div>
-        <div id="windingSection" class="section" style="display:none;">
-  	<label>Start Date:</label>
-  	<input type="date" name="windingStartDate" />
-
-  	<label>End Date:</label>
-  	<input type="date" name="windingEndDate" />
-
+      <!-- Paint Shop Section -->
+      <div id="paintShopSection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="paintStartDate" />
+        <label>End Date:</label>
+        <input type="date" name="paintEndDate" />
         <label>Name(s):</label>
         <div class="checkbox-group">
-  	<label><input type="checkbox" name="winderNames" value="Manoj Kumar" /> Manoj Kumar</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Bachchu Singh" /> Bachchu Singh</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Vinod 3rd" /> Vinod 3rd</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Mangal Das" /> Mangal Das</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Sahab Singh" /> Sahab Singh</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Nayakar" /> Nayakar</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Vikram" /> Vikram</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Nannu Khan" /> Nannu Khan</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Ashok Kumar" /> Ashok Kumar</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Pushpendra" /> Pushpendra</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Gulrej" /> Gulrej</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Soran Singh" /> Soran Singh</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Devendra Chauhan" /> Devendra Chauhan</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Mohamuddin" /> Mohamuddin</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Soaib Khan" /> Soaib Khan</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Shyamveer" /> Shyamveer</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Bhura Singh" /> Bhura Singh</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Bhim Singh" /> Bhim Singh</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Rahul Kumar" /> Rahul Kumar</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Akram" /> Akram</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Vikash Kumar" /> Vikash Kumar</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Prem Singh" /> Prem Singh</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Contractor" /> Contractor</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Lakhan" /> Lakhan</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="Nihal" /> Nihal</label><br/>
-  	<label><input type="checkbox" name="winderNames" value="HARIBHAN" /> HARIBHAN</label><br/>
-        </DIV>
-  	<label>Type:</label>
-  	<select name="windingType">
-    	  <option value="">-- Select Type --</option>
-    	  <option value="HV COIL">HV COIL</option>
-    	  <option value="LV COIL">LV COIL</option>
-    	  <option value="HV DISC">HV DISC</option>
-    	  <option value="LV DISC">LV DISC</option>
-  	</select>
+          <label><input type="checkbox" name="painters" value="Ram Ratan" /> Ram Ratan</label>
+          <label><input type="checkbox" name="painters" value="Krishna (H)" /> Krishna (H)</label>
+        </div>
+        <label>Tank No:</label>
+        <input type="text" name="paintTankNo" />
+        <label>Design Number:</label>
+        <input type="text" name="designNumber" id="paintDesignInput" readonly />
+        <label>Type:</label>
+        <select name="paintType">
+          <option value="">-- Select Type --</option>
+          <option value="Inhouse">Inhouse</option>
+          <option value="Outside">Outside</option>
+        </select>
+        <label>KVA:</label>
+        <input type="text" name="paintKVA" id="paintKVAInput" readonly />
+        <label>Coat:</label>
+        <select name="coat">
+          <option value="">-- Select Coat --</option>
+          <option value="Epoxy Primer - Intergard 906">Epoxy Primer - Intergard 906</option>
+          <option value="Synthetic Primer - Apcomin 100">Synthetic Primer - Apcomin 100</option>
+        </select>
+        <label>Remarks:</label>
+        <textarea name="paintRemarks" rows="3"></textarea>
+      </div>
 
-  	<label>Ratio (KV):</label>
-  	<select name="ratioKV">
-    	  <option value="">-- Select Ratio --</option>
-    	  <option value="11/0.415">11/0.415</option>
-    	  <option value="11/0.8">11/0.8</option>
-  	</select>
-
-  	<label>Design No:</label>
-  	<select name="windingDesignNo">
-    	  <option value="">-- Select Design No --</option>
-      	  <option value="1709/1000 KVA">1726/250 KVA</option>
-    	  <option value="1774/500 KVA">1798/R1 1600 KVA</option>
-	  <option value="1866/4250 KVA">1866/4250 KVA</option>
-	  <option value="1797/1250 KVA">1797/1250 KVA</option>
-	  <option value="1748/2500 KVA">1748/2500 KVA</option>
-	  <option value="1872/630 KVA">1872/630 KVA</option>
-          <option value="1406/10 KVA">1406/10 MVA</option>
-	  <option value="1866/4250 KVA">1866/4250 KVA</option>
-	  <option value="1848/1000 KVA">1848/1000 KVA</option>
-  	  </select>
-
-  	<label>No. of Disc:</label>
-  	<input type="number" name="noOfDisc" />
-
-  	<label>Coil Number:</label>
-  	<input type="text" name="coilNumber" />
-
-  	<label>Supplier Name:</label>
-  	<select name="supplierName">
-    	  <option value="">-- Select Supplier --</option>
-    	  <option value="Shera Energy JAIPUR">Shera Energy JAIPUR</option>
-    	  <option value="Vidya Wires Pvt Ltd, Anand">Vidya Wires Pvt Ltd, Anand</option>
-    	  <option value="Amarish">Amarish</option>
-    	  <option value="JMW India Pvt Ltd.">JMW India Pvt Ltd.</option>
-  	</select>
-
-  	<label>Remarks:</label>
-  	<textarea name="windingRemarks" rows="3"></textarea>
-	</div>
-        <div id="lvConnectionSection" class="section" style="display:none;">
-  	<label>Start Date:</label>
-  	<input type="date" name="lvStartDate" />
-
-  	<label>End Date:</label>
-  	<input type="date" name="lvEndDate" />
-
+      <!-- Winding Section -->
+      <div id="windingSection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="windingStartDate" />
+        <label>End Date:</label>
+        <input type="date" name="windingEndDate" />
         <label>Name(s):</label>
         <div class="checkbox-group">
-  	<label><input type="checkbox" name="lvWorkers" value="Mahendra Singh" /> Mahendra Singh</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Parshu Ram" /> Parshu Ram</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Inderdev" /> Inderdev</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Satyaveer Contractor" /> Satyaveer Contractor</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Devendra Singh" /> Devendra Singh</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Ganesh Das" /> Ganesh Das</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Jitendra" /> Jitendra</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Bahadur" /> Bahadur</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Naved Ahmad" /> Naved Ahmad</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Sachin" /> Sachin</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Devendra Tomar" /> Devendra Tomar</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Amit" /> Amit</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Keshav" /> Keshav</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Vijay" /> Vijay</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Khajan" /> Khajan</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Sonu" /> Sonu</label><br/>
-  	<label><input type="checkbox" name="lvWorkers" value="Satendra Singh" /> Satendra Singh</label><br/>
-        </DIV>
-  	<label>KVA:</label>
-  	<input type="text" name="lvKVA" />
+          <label><input type="checkbox" name="winderNames" value="Manoj Kumar" /> Manoj Kumar</label>
+          <label><input type="checkbox" name="winderNames" value="Bachchu Singh" /> Bachchu Singh</label>
+        </div>
+        <label>Type:</label>
+        <select name="windingType">
+          <option value="">-- Select Type --</option>
+          <option value="HV COIL">HV COIL</option>
+          <option value="LV COIL">LV COIL</option>
+          <option value="HV DISC">HV DISC</option>
+          <option value="LV DISC">LV DISC</option>
+        </select>
+        <label>Ratio (KV):</label>
+        <select name="windingRatioKV">
+          <option value="">-- Select Ratio --</option>
+          <option value="11/0.415">11/0.415</option>
+          <option value="11/0.8">11/0.8</option>
+        </select>
+        <label>Design No:</label>
+        <input type="text" name="windingDesignNo" id="windingDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="windingKVA" id="windingKVAInput" readonly />
+        <label>No. of Disc:</label>
+        <input type="number" name="noOfDisc" />
+        <label>Coil Number:</label>
+        <input type="text" name="coilNumber" />
+        <label>Supplier Name:</label>
+        <select name="supplierName">
+          <option value="">-- Select Supplier --</option>
+          <option value="Shera Energy JAIPUR">Shera Energy JAIPUR</option>
+          <option value="Vidya Wires Pvt Ltd, Anand">Vidya Wires Pvt Ltd, Anand</option>
+        </select>
+        <label>Remarks:</label>
+        <textarea name="windingRemarks" rows="3"></textarea>
+      </div>
 
-  	<label>Remarks:</label>
-  	<textarea name="lvRemarks" rows="3"></textarea>
-	</div>
-        <div id="hvConnectionSection" class="section" style="display:none;">
-  	<label>Start Date:</label>
-  	<input type="date" name="hvStartDate" />
-
-  	<label>End Date:</label>
-  	<input type="date" name="hvEndDate" />
-
+      <!-- LV Connection Section -->
+      <div id="lvConnectionSection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="lvStartDate" />
+        <label>End Date:</label>
+        <input type="date" name="lvEndDate" />
         <label>Name(s):</label>
         <div class="checkbox-group">
-  	  <label><input type="checkbox" name="hvWorkers" value="Amit" /> Amit</label><br/>                                                
-  	  <label><input type="checkbox" name="hvWorkers" value="Bahadur" /> Bahadur</label><br/>                                                
-  	  <label><input type="checkbox" name="hvWorkers" value="Inderdev" /> Inderdev</label><br/>                                                    
-  	  <label><input type="checkbox" name="hvWorkers" value="Chandresh" /> Chandresh</label><br/>                            
-  	  <label><input type="checkbox" name="hvWorkers" value="Devendra Singh" /> Devendra Singh</label><br/>
-          <label><input type="checkbox" name="hvWorkers" value="Devendra Tomar" /> Devendra Tomar</label><br/>                                
-  	  <label><input type="checkbox" name="hvWorkers" value="Dinesh Parmar" /> Dinesh Parmar</label><br/>                                                
-  	  <label><input type="checkbox" name="hvWorkers" value="Ganesh Das" /> Ganesh Das</label><br/>                                                    
-  	  <label><input type="checkbox" name="hvWorkers" value="Hariom" /> Hariom</label><br/>                                                      
-  	  <label><input type="checkbox" name="hvWorkers" value="Inderdev" /> Inderdev</label><br/>                                              
-  	  <label><input type="checkbox" name="hvWorkers" value="Jitendra" /> Jitendra</label><br/>                                                        
-  	  <label><input type="checkbox" name="hvWorkers" value="Keshav" /> Keshav</label><br/>                                        
-  	  <label><input type="checkbox" name="hvWorkers" value="Khajan" /> Khajan</label><br/>                                                           
-  	  <label><input type="checkbox" name="hvWorkers" value="Mahendra Singh" /> Mahendra Singh</label><br/>                                                        
-  	  <label><input type="checkbox" name="hvWorkers" value="Naved Ahmad" /> Naved Ahmad</label><br/>                                                         
-  	  <label><input type="checkbox" name="hvWorkers" value="Parshu Ram" /> Parshu Ram</label><br/>                                                        
-  	  <label><input type="checkbox" name="hvWorkers" value="Parwat singh" /> Parwat singh</label><br/>
-          <label><input type="checkbox" name="hvWorkers" value="Sachin" /> Sachin</label><br/>
-          <label><input type="checkbox" name="hvWorkers" value="Sonu" /> Sonu</label><br/>
-          <label><input type="checkbox" name="hvWorkers" value="Vijay" /> Vijay</label><br/>
-          <label><input type="checkbox" name="hvWorkers" value="Vipin" /> Vipin</label><br/>
-        </DIV>
-  	<label>Remarks:</label>
-  	<textarea name="hvRemarks" rows="3"></textarea>
-	</div>
+          <label><input type="checkbox" name="lvWorkers" value="Mahendra Singh" /> Mahendra Singh</label>
+          <label><input type="checkbox" name="lvWorkers" value="Parshu Ram" /> Parshu Ram</label>
+        </div>
+        <label>Design Number:</label>
+        <input type="text" name="lvDesign" id="lvDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="lvKVA" id="lvKVAInput" readonly />
+        <label>Remarks:</label>
+        <textarea name="lvRemarks" rows="3"></textarea>
+      </div>
 
-      <button type="submit">Submit</button> 
+      <!-- HV Connection Section -->
+      <div id="hvConnectionSection" class="section" style="display:none;">
+        <label>Start Date:</label>
+        <input type="date" name="hvStartDate" />
+        <label>End Date:</label>
+        <input type="date" name="hvEndDate" />
+        <label>Name(s):</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="hvWorkers" value="Amit" /> Amit</label>
+          <label><input type="checkbox" name="hvWorkers" value="Bahadur" /> Bahadur</label>
+        </div>
+        <label>Design Number:</label>
+        <input type="text" name="hvDesign" id="hvDesignInput" readonly />
+        <label>KVA:</label>
+        <input type="text" name="hvKVA" id="hvKVAInput" readonly />
+        <label>Remarks:</label>
+        <textarea name="hvRemarks" rows="3"></textarea>
+      </div>
+
+      <button type="submit">Submit</button>
+      <button type="button" class="problem-btn" onclick="openProblemModal()">Report a Problem</button>
     </form>
   </div>
 
+  <!-- Problem Report Modal -->
+  <div id="problemModal" class="modal">
+    <div class="modal-content">
+      <h2>Report a Problem</h2>
+      <form id="problemForm">
+        <label for="problemDepartment">Department:</label>
+        <select id="problemDepartment" name="problemDepartment" required>
+          <option value="">-- Select Department --</option>
+          <option>WINDING</option>
+          <option>CORE ASSEMBLY</option>
+          <option>COIL ASSEMBLY</option>
+          <option>TOP YOKE</option>
+          <option>HV CONNECTION</option>
+          <option>LV CONNECTION</option>
+          <option>OVEN IN</option>
+          <option>OVEN OUT</option>
+          <option>MEGGER</option>
+          <option>RATIO</option>
+          <option>TANK UP</option>
+          <option>TESTING</option>
+          <option>TANK FABRICATION</option>
+          <option>FABRICATION LID</option>
+          <option>PAINT SHOP</option>
+        </select>
+
+        <label for="issueType">Type of Issue:</label>
+        <select id="issueType" name="issueType" required>
+          <option value="">-- Select Issue Type --</option>
+          <option>Minor Issue</option>
+          <option>Major Issue</option>
+        </select>
+
+        <label for="problemDescription">Description:</label>
+        <textarea id="problemDescription" name="problemDescription" rows="5" required></textarea>
+
+        <label for="problemPhoto">Upload Photo:</label>
+        <input type="file" id="problemPhoto" name="problemPhoto" accept="image/*" capture="environment">
+
+        <div class="btn-group">
+          <button type="submit" class="problem-btn">Submit Problem</button>
+          <button type="button" class="cancel-btn" onclick="closeProblemModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>Developed by MEI PVT. LTD.</p>
+  </footer>
+
   <script>
+    // Your Google Apps Script Web App URL - UPDATE THIS WITH YOUR URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyo_TQwiIQSbLwNwUeU2Hwauk8DDdbTTaIDYs6iVOvzryJnKRCgb8tCCaP9sirpiSAY/exec";
+
     function getParam(name) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name);
@@ -839,7 +613,124 @@
       document.getElementById('windingSection').style.display = (dept === 'WINDING') ? 'block' : 'none';
       document.getElementById('lvConnectionSection').style.display = (dept === 'LV CONNECTION') ? 'block' : 'none';
       document.getElementById('hvConnectionSection').style.display = (dept === 'HV CONNECTION') ? 'block' : 'none';
+      
+      // Re-apply auto-fill if we have fetched data
+      if (window.fetchedDesign && window.fetchedKVA) {
+        autoFillDesignKVA(window.fetchedDesign, window.fetchedKVA);
+      }
+    }
 
+    function openProblemModal() {
+      document.getElementById('problemModal').style.display = 'block';
+    }
+
+    function closeProblemModal() {
+      document.getElementById('problemModal').style.display = 'none';
+      document.getElementById('problemForm').reset();
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('problemModal');
+      if (event.target === modal) {
+        closeProblemModal();
+      }
+    }
+
+    // Auto-fetch when job number field loses focus (on Tab or click outside)
+    document.getElementById('jobNumber').addEventListener('blur', function() {
+      const jobNumber = this.value.trim();
+      if (jobNumber) {
+        fetchDesignData(jobNumber);
+      }
+    });
+
+    // Also fetch on Enter key
+    document.getElementById('jobNumber').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const jobNumber = this.value.trim();
+        if (jobNumber) {
+          fetchDesignData(jobNumber);
+          // Move focus to next field
+          document.getElementById('department').focus();
+        }
+      }
+    });
+
+    function fetchDesignData(jobNumber) {
+      fetch(SCRIPT_URL + "?action=getDesign&jobNumber=" + encodeURIComponent(jobNumber))
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Store fetched values globally
+            window.fetchedDesign = data.design;
+            window.fetchedKVA = data.kva;
+            
+            // Update hidden fields
+            document.getElementById('fetchedDesign').value = data.design;
+            document.getElementById('fetchedKVA').value = data.kva;
+            
+            // Auto-fill all design and KVA fields
+            autoFillDesignKVA(data.design, data.kva);
+            
+          } else {
+            // Clear fields if job not found
+            clearDesignFields();
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching design data:", error);
+        });
+    }
+
+    function autoFillDesignKVA(design, kva) {
+      // List of all design input IDs
+      const designInputs = [
+        'coreDesignInput', 'coilDesignInput', 'meggerDesignInput', 'fabLidDesignInput',
+        'ovenOutDesignInput', 'ovenInDesignInput', 'tankUpDesignInput', 'testingDesignInput',
+        'topYokeDesignInput', 'tankFabDesignInput', 'ratioDesignInput', 'paintDesignInput',
+        'windingDesignInput', 'lvDesignInput', 'hvDesignInput'
+      ];
+      
+      // List of all KVA input IDs
+      const kvaInputs = [
+        'coreKVAInput', 'coilKVAInput', 'meggerKVAInput', 'fabLidKVAInput',
+        'ovenOutKVAInput', 'ovenInKVAInput', 'tankUpKVAInput', 'testingKVAInput',
+        'topYokeKVAInput', 'tankFabKVAInput', 'ratioKVAInput', 'paintKVAInput',
+        'windingKVAInput', 'lvKVAInput', 'hvKVAInput'
+      ];
+      
+      // Fill all design inputs
+      designInputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.value = design;
+          el.classList.add('auto-filled');
+        }
+      });
+      
+      // Fill all KVA inputs
+      kvaInputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.value = kva;
+          el.classList.add('auto-filled');
+        }
+      });
+    }
+
+    function clearDesignFields() {
+      window.fetchedDesign = null;
+      window.fetchedKVA = null;
+      
+      document.getElementById('fetchedDesign').value = '';
+      document.getElementById('fetchedKVA').value = '';
+      
+      // Clear all auto-filled fields
+      document.querySelectorAll('.auto-filled').forEach(el => {
+        el.value = '';
+        el.classList.remove('auto-filled');
+      });
     }
 
     window.onload = function() {
@@ -847,60 +738,96 @@
       if (jobParam) {
         document.getElementById('jobNumber').value = jobParam;
         document.getElementById('jobNumber').setAttribute('readonly', true);
+        fetchDesignData(jobParam);
       }
+    }
+
+    // Main Form Submission
+    document.getElementById("jobForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = new URLSearchParams();
+      const groupedValues = {};
+
+      for (const [key, value] of formData.entries()) {
+        if (groupedValues[key]) {
+          groupedValues[key].push(value);
+        } else {
+          groupedValues[key] = [value];
+        }
+      }
+
+      for (const key in groupedValues) {
+        data.append(key, groupedValues[key].join(", "));
+      }
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(response => response.text())
+      .then(result => {
+        alert("Form submitted successfully!");
+        form.reset();
+        clearDesignFields();
+      })
+      .catch(error => {
+        alert("Error submitting form: " + error.message);
+      });
+    });
+
+    // Problem Form Submission
+    document.getElementById("problemForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const fileInput = document.getElementById('problemPhoto');
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const base64Data = event.target.result;
+          submitProblemReport(formData, base64Data, file.name);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        submitProblemReport(formData, null, null);
+      }
+    });
+
+    function submitProblemReport(formData, photoData, fileName) {
+      const data = new URLSearchParams();
+      data.append('formType', 'problem');
+      data.append('problemDepartment', formData.get('problemDepartment'));
+      data.append('issueType', formData.get('issueType'));
+      data.append('problemDescription', formData.get('problemDescription'));
+      
+      if (photoData) {
+        data.append('photoData', photoData);
+        data.append('fileName', fileName);
+      }
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(response => response.text())
+      .then(result => {
+        alert("Problem report submitted successfully!");
+        closeProblemModal();
+      })
+      .catch(error => {
+        alert("Error submitting problem report: " + error.message);
+      });
     }
   </script>
 </body>
 </html>
-
-<script>
-  document.getElementById("jobForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // Prevent default form submission
-
-    const form = e.target;
-    const formData = new FormData(form);
-    
-    // Convert FormData to URLSearchParams for application/x-www-form-urlencoded POST
-    const data = new URLSearchParams();
-
-    // Group multiple values (like checkboxes) with same name
-    const groupedValues = {};
-    for (const [key, value] of formData.entries()) {
-      if (groupedValues[key]) {
-        groupedValues[key].push(value);
-      } else {
-        groupedValues[key] = [value];
-      }
-    }
-
-    // Append grouped keys as comma-separated strings
-    for (const key in groupedValues) {
-      data.append(key, groupedValues[key].join(", "));
-    }
-
-    // POST to your Google Apps Script Web App URL
-    fetch("https://script.google.com/macros/s/AKfycbxVGlqjrJBuaGz5so9v5zlqAt17ZjzU1hw-JnUx4GQgWt82D1KFABM-CjoQIPRk01fw/exec", {
-      method: "POST",
-      body: data,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    })
-    .then(response => response.text())
-    .then(result => {
-      alert("Form submitted successfully!");
-      form.reset();
-    })
-    .catch(error => {
-      alert("Error submitting form: " + error.message);
-    });
-  });
-</script>
-<footer style="position: fixed; bottom: 0; right: 0; padding: 8px 12px; font-size: 8px; color: #555;">
-  <p>Developed by MEI PVT. LTD.</p>
-</footer>
-</body>
-</html>
-
-
-
